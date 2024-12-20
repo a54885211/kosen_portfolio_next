@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+
+            <script>
+                const APP_ID = "d203e2ee-9b4f-4e8b-94ef-b402a82371cb"
+                const ACCESS_KEY = "V2-HLy3J-aLJaD-H3mRI-aFGvN-xBk24-mlXD7-6dEpi-lvzjz"
+                const TABLE_NAME = "Table 1"
+                const url = `https://www.appsheet.com/api/v2/apps/${APP_ID}/tables/${TABLE_NAME}/Action?applicationAccessKey=${ACCESS_KEY}`;
+                
+                
+                
+                //get data
+                async function getData() {
+
+                    const payload = {
+                        Action: "Find",
+                        Properties: {
+                            Locale: "ja-JP",
+                            Selector: "FILTER('Table 1',TRUE)"
+                            // Selector: "FILTER('Table 1',[Key] = '5')"
+                            // Selector: "FILTER('Table 1',[Title] = 'Item 5')"
+                            //Selector: "FILTER('Table 1',[Date] = '2024/09/09')"
+                        }
+                    }
+
+                    const options = {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(payload)
+                    };
+
+                    try {
+                        const response = await fetch(url, options);
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return await response.text();
+                        // return await response.json()
+                    } catch (error) {
+                        console.error("Error: " + error.message);
+                        return error.message
+                    }
+
+                }
+
+                const doFunctionGet=()=>{
+
+                    getData()
+                        .then(res=>{
+                            const dataDisplayElem = document.getElementById("data-display")
+                            dataDisplayElem.innerText = res
+                        })
+                        .catch(err=>{
+                            const dataDisplayElem = document.getElementById("data-display")
+                            dataDisplayElem.innerText = err
+                        });
+                    
+                };
+
+           
+                //add data
+                async function addData(Title,FileName) {
+                
+                    const payload = {
+                        Action: "Add",
+                        Properties: {
+                            Locale: "ja-JP",
+                        },
+                        Rows:[
+                            {
+                               Title: Title,
+                               Date: "2024/09/14",
+                               FileName: FileName,
+                               File: ""
+                            },
+                        ]
+                    };
+                        
+                    const options = {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(payload)
+                    };
+
+                    try {
+                        const response = await fetch(url, options);
+                        console.log(response);
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return await response.text();
+                        // return await response.json()
+                    } catch (error) {
+                        console.error("Error: " + error.message);
+                        return error.message;
+                    }
+                
+                }
+
+                const doFunctionAdd = () => {
+                
+                    addData()
+                        .then(res => {
+                            const dataDisplayElem = document.getElementById("data-display");
+                            dataDisplayElem.innerText = res;
+                        })
+                        .catch(err => {
+                            const dataDisplayElem = document.getElementById("data-display");
+                            dataDisplayElem.innerText = err;
+                        });
+                
+                };
+
+                // Update data
+                async function updateData() {
+                    console.log("sfgarg");
+
+                        const payload = {
+                            Action: "Edit",
+                            Properties: {
+                                Locale: "ja-JP",
+                            },
+                            Rows: [
+                                {
+                                    "Row ID": "Df6FpGHdus43EwZdrA4M01", // 行の識別子 (例: Keyフィールド)
+                                    Title: "Item 5",
+                                    Date: "2024-09-15", // 日付形式を統一
+                                    FileName: "更新されたファイル",
+                                    File: "" // 空のフィールドでも必須なら送信
+                                }
+                            ]
+            };
+
+            const options = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            };
+
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.text();
+            } catch (error) {
+                console.error("Error: " + error.message);
+                return error.message;
+            }
+        }
+
+
+        const doFunctionUpdate = () => {
+            updateData()
+                .then(res => {
+                    const dataDisplayElem = document.getElementById("data-display");
+                    dataDisplayElem.innerText = res;
+                })
+                .catch(err => {
+                    const dataDisplayElem = document.getElementById("data-display");
+                    dataDisplayElem.innerText = err;
+                });
+        };
+
+        // Delete data
+        async function deleteData() {
+            const payload = {
+                Action: "Delete",
+                Properties: {
+                    Locale: "ja-JP",
+                },
+                Rows: [
+                    {
+                        "Row ID": "rNWCHWGBUv4uAIryYqIief"// 削除対象の行の識別子
+                    }
+                ]
+            };
+
+            const options = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            };
+
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.text();
+            } catch (error) {
+                console.error("Error: " + error.message);
+                return error.message;
+            }
+        }
+
+        const doFunctionDelete = () => {
+            deleteData()
+                .then(res => {
+                    const dataDisplayElem = document.getElementById("data-display");
+                    dataDisplayElem.innerText = res;
+                })
+                .catch(err => {
+                    const dataDisplayElem = document.getElementById("data-display");
+                    dataDisplayElem.innerText = err;
+                });
+        };
+
+        //「登録」ボタンが押されたとき
+        function onButtonClick() {
+            const Title = document.getElementById("Title").value;
+            const FileName = document.getElementById("FileName").value;
+            addData(Title,FileName)
+            closePopup()
+        }
+
+        // ポップアップを表示する関数
+        function showPopup() {
+            document.getElementById("popup").style.display = "block";
+        }
+
+        // ポップアップを閉じる関数
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+
+
+            </script>
+            <style>
+                /* ボタン風のスタイル */
+                .green-button {
+                    padding: 10px 20px;
+                    background-color: #4CAF50;
+                    color: white;
+                    border: none;
+                    font-size: 16px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                }
+
+                .green-button:hover {
+                    background-color: #45a049; /* ホバー時の色 */
+                }
+
+                /* ポップアップの内容 */
+                .popup-content {
+                    display: none;
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background-color: white;
+                    padding: 20px;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                    border-radius: 8px;
+                }
+
+                .popup-close {
+                    display: block;
+                    margin-top: 10px;
+                    padding: 8px 16px;
+                    background-color: red;
+                    color: white;
+                    text-align: center;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    border: none;
+                }
+
+                .popup-close:hover {
+                    background-color: darkred;
+                }
+
+            </style>
+        </head>
+        <body>
+            <button type="button" class="green-button" onclick=doFunctionGet()>テスト get</button>
+            <button type="button" class="green-button" onclick=doFunctionAdd()>テスト add</button>
+            <button type="button" class="green-button" onclick="doFunctionUpdate()">テスト update</button>
+            <button type="button" class="green-button" onclick="doFunctionDelete()">テスト delete</button>
+            
+             <!-- ポップアップを表示するボタン -->
+            <button class="green-button" onclick="showPopup()">ポップアップを表示する</button>
+
+            <!-- ポップアップの内容 -->
+            <div class="popup-content" id="popup">
+                <p>
+                    <p>title:<br>
+                        <input type="text" id="Title">
+                    </p>
+                    <p>FileName:<br>
+                        <input type="text" id="FileName">
+                    </p>
+                </p>
+                <button class="popup-close" onclick="onButtonClick()">登録</button>
+            </div>
+
+            <div id="data-display">
+                ここに取得したデータが表示されます
+            </div>
+        </body>
+    </html>

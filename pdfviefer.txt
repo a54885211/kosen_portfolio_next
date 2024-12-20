@@ -1,0 +1,309 @@
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import React from 'react';
+import { actionAsyncStorage } from "next/dist/client/components/action-async-storage.external";
+
+const inter = Inter({ subsets: ["latin"] });
+
+
+const data =[
+  {
+    filename:"HR 2024年度 教科書購入リスト（4年生）",
+    outline:"IMG_20240411_0001",
+    URL:"https://drive.google.com/file/d/1-6ubQI0PRVPea0wjraE6LAg_qxA4ozcx/view?usp=drive_link"
+  },
+  {
+    filename:"応用物理１ シラバスプリント",
+    outline:"IMG_20240411_0002",
+    URL:"https://drive.google.com/file/d/14xlBjOm99igLHCZOQTHVG8DYIvrl7F-z/view?usp=drive_link"
+  },
+  {
+    filename:"応用物理１ 授業プリント 単位ベクトルと座標系",
+    outline:"IMG_20240411_0003",
+    URL:"https://drive.google.com/file/d/1rrUu-Eb6e-Wq2R3aCJXWZJLt31J5dybP/view?usp=drive_link"
+  },
+  {
+    filename:"HR ICT教育環境に関するアンケート依頼（2～5年）",
+    outline:"IMG_20240411_0004",
+    URL:"https://drive.google.com/file/d/11DkHsqzE6W-r4HsOmh4L_r0pxk7Uh660/view?usp=drive_link"
+  },
+  {
+    filename:"HR 欠席・遅刻連絡のオンライン化について",
+    outline:"IMG_20240411_0005",
+    URL:"https://drive.google.com/file/d/1QMXCBL0_c_gSIeFHIqCm0ycXwEvdOTUI/view?usp=drive_link"
+  },
+  {
+    filename:"HR 教科書購入についての注意事項",
+    outline:"IMG_20240411_0006",
+    URL:"https://drive.google.com/file/d/1tnIUu_nZwaPrh999HZ-gOHFRuYoo3mR3/view?usp=drive_link"
+  },
+  {
+    filename:"HR 単位取得状況一覧表",
+    outline:"IMG_20240411_0007",
+    URL:"https://drive.google.com/file/d/1Y3_jUA7fKlgfcjlni3ERMCMdC2EY503z/view?usp=drive_link"
+  },
+  {
+    filename:"電気回路２ ガイダンス スライド資料",
+    outline:"IMG_20240411_0008",
+    URL:"https://drive.google.com/file/d/16CUBXD44RSRr2tNHPHUMA3-xyDVjthzr/view?usp=drive_link"
+  },
+  {
+    filename:"HR 履歴書・自己紹介書",
+    outline:"IMG_20240411_0009",
+    URL:"https://drive.google.com/file/d/1OWdW0mo6iu8PToM2ELc2bINNkwC6JNC_/view?usp=drive_link"
+  },
+  {
+    filename:"応用数学１ 振り返りシート",
+    outline:"IMG_20240412_0001",
+    URL:"https://drive.google.com/file/d/17QjHrdx7Ys7V4MVSdfHXsXi3JzEJWFM3/view?usp=drive_link"
+  },
+  {
+    filename:"応用数学１ 課題No.1",
+    outline:"IMG_20240412_0002",
+    URL:"https://drive.google.com/file/d/1nnoEbbrdlCxN4lJJfOvuu0KcawAFrk4f/view?usp=drive_link"
+  },
+  {
+    filename:"応用数学１ 課題No.2",
+    outline:"IMG_20240412_0003",
+    URL:"https://drive.google.com/file/d/16QYCHNA47MgsldeNewFhnourAFlR5YyW/view?usp=drive_link"
+  },
+  {
+    filename:"応用数学１ 課題No.3",
+    outline:"IMG_20240412_0004",
+    URL:"https://drive.google.com/file/d/1V1-t5b82eq1z0pWPkVqe9j2EW3vo562B/view?usp=drive_link"
+  },
+  {
+    filename:"社会文化論 中江兆民著「三酔人経綸問答」を読む",
+    outline:"IMG_20240412_0005",
+    URL:"https://drive.google.com/file/d/17xUQkMTjPGHShkkzjbJETIrDtrBNJMcV/view?usp=drive_link"
+  },
+  {
+    filename:"社会文化論 民主主義とはなんだろうか？",
+    outline:"IMG_20240412_0006",
+    URL:"https://drive.google.com/file/d/1wuyhtttZ2CZ8QI6laXbaTvo9EAsxS3xV/view?usp=drive_link"
+  },
+  {
+    filename:"社会文化論 三酔人経綸問答 原本",
+    outline:"IMG_20240412_0007",
+    URL:"https://drive.google.com/file/d/16F9W69TlbTm1S9P5MVJODAEgF_4QLUOh/view?usp=drive_link"
+  },
+  {
+    filename:"社会文化論 ガイダンス 冊子",
+    outline:"IMG_20240412_0008",
+    URL:"https://drive.google.com/file/d/1gFIbs0Z3vHTLTFZ5mrVUHIywbR8UAlhF/view?usp=drive_link"
+  },
+  {
+    filename:"電子機械工学実験１ 指導書",
+    outline:"IMG_20240412_0009",
+    URL:"https://drive.google.com/file/d/1LIgt6pZzujrVIcg4-eKscjJ3VcBRBPXN/view?usp=drive_link"
+  },
+  {
+    filename:"保健体育 4年生 保険・体育の授業について",
+    outline:"IMG_20240415_0001",
+    URL:"https://drive.google.com/file/d/1GnD-Ouj8Q6aHftuLQnv8vs8fNX6ttT-A/view?usp=drive_link"
+  },
+  {
+    filename:"社会文化論 書名・目次（眉批）の解説・現代語訳・詿　Ｐ1∼6",
+    outline:"IMG_20240415_0002",
+    URL:"https://drive.google.com/file/d/1kCqf06_-WjAdrKlEpanud9QOYOJhuC4G/view?usp=drive_link"
+  },
+  {
+    filename:"社会文化論 書名・目次（眉批）の解説・現代語訳・詿　Ｐ7∼12",
+    outline:"IMG_20240416_0001",
+    URL:"https://drive.google.com/file/d/1jSv-FXUQvID66cwRIkVYnEel-msbbFds/view?usp=drive_link"
+  },
+  {
+    filename:"社会文化論 三酔人経綸問答",
+    outline:"IMG_20240416_0002",
+    URL:"https://drive.google.com/file/d/1cLbxo6m3RlxQMVmqzaIFHEdD66ERUvB_/view?usp=drive_link"
+  },
+  {
+    filename:"工学演習　演習問題プリント　合成抵抗",
+    outline:"IMG_20240416_0003",
+    URL:"https://drive.google.com/file/d/1_w4TxwYHl_exmiZ-RbVJphvtbGLqxgfs/view?usp=drive_link"
+  },
+  {
+    filename:"工学演習　演習問題＜電磁力＞",
+    outline:"IMG_20240416_0004",
+    URL:"https://drive.google.com/file/d/1TdMMZgqUvIAlxlIS0y18SabeRz89-lbO/view?usp=drive_link"
+  },
+  {
+    filename:"工学演習　演習問題＜電磁誘導＞",
+    outline:"IMG_20240416_0005",
+    URL:"https://drive.google.com/file/d/1kRLgG0BKD0xHRp_fm1KE3-8bKbjJ8mOn/view?usp=drive_link"
+  },
+  {
+    filename:"工学演習　演習問題＜電流と磁界＞",
+    outline:"IMG_20240416_0006",
+    URL:"https://drive.google.com/file/d/121uMlCgKJJDIzBfR7TRUvK8450pwUW0x/view?usp=drive_link"
+  },
+  {
+    filename:"法と経済　Google Classroom への参加方法",
+    outline:"IMG_20240416_0007",
+    URL:"https://drive.google.com/file/d/19nwWTSK2lOdS5YCvedPcE6NpbV3qOMoa/view?usp=drive_link"
+  },
+  {
+    filename:"法と経済　前期法学　第1回　スライド資料",
+    outline:"IMG_20240416_0008",
+    URL:"https://drive.google.com/file/d/1hJWYxlmDwS2TsvbQnETo1PbLguRpBHxQ/view?usp=drive_link"
+  },
+  {
+    filename:"電子回路１　第1回　電子回路ガイダンス　スライド資料",
+    outline:"IIMG_20240416_0009",
+    URL:"https://drive.google.com/file/d/1KtSgQPr_QmHU1mWXJnHFCVycrLvZyDwu/view?usp=drive_link"
+  },
+  {
+    filename:"応用物理１ 授業プリント 速度ベクトルの微分：変位と速度",
+    outline:"IMG_20240417_0001",
+    URL:"https://drive.google.com/file/d/1Ig1_uxXABUkH4scv9m9aMj_mEwmKBjnf/view?usp=drive_link"
+  },
+  {
+    filename:"洋服の青山　着こなし方講座　チェック項目",
+    outline:"IMG_20240417_0002",
+    URL:"https://drive.google.com/file/d/1gaBQB7nX_JZY-H22Xv52zaPrWcPbqnt1/view?usp=drive_link"
+  },
+  {
+    filename:"洋服の青山　着こなし方講座　就活サポート",
+    outline:"IMG_20240417_0003",
+    URL:"https://drive.google.com/file/d/1Up3yMFic7GzMEam6GfE75ftqv6-95n23/view?usp=drive_link"
+  },
+  {
+    filename:"洋服の青山　着こなし方講座　講義メモ用紙",
+    outline:"IMG_20240417_0004",
+    URL:"https://drive.google.com/file/d/15MH33Zmc_y60bX9MRLeCNZKURwrR4vkX/view?usp=drive_link"
+  },
+  {
+    filename:"熱力学　講義　2024",
+    outline:"IMG_20240418_0001",
+    URL:"https://drive.google.com/file/d/1ooZFZwdLd4KSx-JEmPPnBSvhsH6-Je4c/view?usp=drive_link"
+  },
+  {
+    filename:"英語4　U1",
+    outline:"IMG_20240418_0002",
+    URL:"https://drive.google.com/file/d/11w2jaz5Tjspa3QydVYugMax1MFWCMHoX/view?usp=drive_link"
+  },
+  {
+    filename:"法と経済　前期法学　第２回　スライド資料",
+    outline:"IMG_20240424_0001",
+    URL:"https://drive.google.com/file/d/1LQr1BwhF1SYhJgxO03n-DEgv1wYIHBVM/view?usp=drive_link"
+  },
+  {
+    filename:"材料力学　補足プリント　断面２次モーメント",
+    outline:"IMG_20240424_0002",
+    URL:"https://drive.google.com/file/d/1WR5texaFrp9UqkWk9KeoBANUlUe4u1fY/view?usp=drive_link"
+  },
+  {
+    filename:"社会文化論　現代語訳　担当箇所",
+    outline:"IMG_20240424_0003",
+    URL:"https://drive.google.com/file/d/163n0ud1_rQW0gacuGPTceIZRDNBhy0hd/view?usp=drive_link"
+  },
+  {
+    filename:"社会文化論　新聞記事　アタリ氏「第３次大戦に拡大も」　独裁・民主主義の対立",
+    outline:"IMG_20240424_0004",
+    URL:"https://drive.google.com/file/d/1V9L1GoRVaAHXGL0UPJGuyXgxbjMVBV4U/view?usp=drive_link"
+  },
+  {
+    filename:"電子回路１　第２回　アナログ回路の基礎　スライド資料",
+    outline:"IMG_20240424_0005",
+    URL:"https://drive.google.com/file/d/1A50Dh1vx_p_IdUBOR4XWinTmL_5V_zFj/view?usp=drive_link"
+  },
+  {
+    filename:"電気回路２　第１回　二端子対（四端子）回路　スライド資料",
+    outline:"IMG_20240424_0006",
+    URL:"https://drive.google.com/file/d/1tQU9Xw5Yon52GvHpsUfF45c-r1OsnQzf/view?usp=drive_linkk"
+  },
+  {
+    filename:"熱力学　４年　演習１－１R1",
+    outline:"IMG_20240426_0001",
+    URL:"https://drive.google.com/file/d/1UwGcaz4cX9CCVLCuzDqHGAdSOAEBuzGF/view?usp=drive_link"
+  },
+  {
+    filename:"電気回路２　第２回　アドミタンス行列　スライド資料",
+    outline:"IMG_20240426_0002",
+    URL:"https://drive.google.com/file/d/1AoM4G-KHy_BwR2NjHvNSbIc9cSe_FhYe/view?usp=drive_link"
+  },
+  {
+    filename:"社会文化論 書名・目次（眉批）の解説・現代語訳・詿　Ｐ13∼16",
+    outline:"IMG_20240426_0003",
+    URL:"https://drive.google.com/file/d/1MDtvWV78lfMyafMj_0-A9BVMTNeHT_yj/view?usp=drive_link"
+  }
+
+
+]
+const filenames = data.map(item => item.filename);
+console.log(filenames);
+const filteredData = data.filter(item => item.filename.includes("社会文化論"));
+console.log(filteredData);
+
+export default function Home() {
+  return (
+    <main
+      className={`flex min-h-screen flex-col justify-between p-24 ${inter.className}`}
+    >
+      <h2 className={`flex justify-center mb-3 text-2xl font-semibold`}>
+            PDFViwer
+          </h2>
+          
+      <div style={{ textAlign: 'right' }}>   
+        <input
+          type="text"
+          //value={searchTerm}
+          //onChange={handleSearchChange}
+          placeholder="Search..."
+
+          className={`mb-3 px-3 py-2 bg-black rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500`}
+          />
+      </div> 
+      <div className=" mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-center">
+
+        {
+        filteredData.map((x) => {
+
+          return <a
+                    className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={x.URL}>
+                      <h2 className={`mb-3 text-2xl font-semibold`}>
+                        {x.filename}{" "}
+                      </h2>
+                      <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+                        {x.outline}
+                       </p>
+              </a>
+          })
+        }
+
+
+         {/* <object
+          
+         data="https://drive.google.com/file/d/1fc9hngtXR0SWAxL0U1OlV-jyfdx4jfAG/view" style={{width:200, height:350}} /> */}
+
+
+
+
+
+        <a
+          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://drive.google.com/file/d/1Up3yMFic7GzMEam6GfE75ftqv6-95n23/view?usp=drive_link"
+        >
+          
+          <div className={`flex justify-center `}>
+            <img
+              src="https://lh3.googleusercontent.com/fife/ALs6j_EM7BeF2ZQNnKkfKquYOEOLWynr08l0Dpt_mAFOMhtO4-so8zEKSBD9hgBdcfITLz53hpXsZdA0tC0y0IJYiWKF0Qigqbfz_91qqq6My6PKVf9bqrU9BGPQ0Vh5UfWALqGRXD0OBetfjLTNM9OqYJ9QhPalgz8i26fqXF14T9-QwKJG4wRJhbORNwLsXL5I9F_9WYZKopR8MPPkq_GGjLiPVfTmcAeg5DntOLF_0yoFN7x_5n__5qQcU-Ajn1py_WAz10m8it78gTcqGIqzFDS3X75Wl5zHTM0YvDptQHNp-vZ7IqRKg1cK6DsDX4n3E9WqX1i8AKJ8_FzAg-KvqMMr27a4go_2ygJjMiWgGs9OR86Zv1NoMqcPli51CC7lYoBV5StsWo1bjsyV1pmkzPPtXXTtSu4LkxJI2u_H5sWEgi7YsGaswZFCeS76EE9yXs3EmFr5XPLalrEk4qrqJyRjeGuhP2jfWzMZM-jm4kEVnrL1PvWPHPmWgHX8Y6uZts-0YSy_wAX7EPJwhMo35tTFbhlJyr_cB0PLefu0GGkDOM1QvsGHcjfhLzhjY-iA05YoBt8dSr_pVes2ONO9p7S3JPqMwzdDt3GE25QiXsF8CR9oz3bvY9J2jyyZ2w_gWo4QHwNBbF-FSwBL-79PPF3iDyQs8EsbzD1k0eosl10DkZXFEPAlGwndBvMzo0OjlTENWfqJAD683X5M8pcaKEi2MW4b2kwIgGmf3Q8msuzybFMmdSqA31W9xWB4jhROyORvUHMwo-ZLmy9VRffu2stQfpTIGzMD_Rt6Rc_Dt5SI0U_8740hgdeSwplgN1Xu9u9DWIKujyAZOGqDwOKvYeUEc8kit6XlZcJeqqVFABIDE2HeHH2iZ1hVyzmemz6JZFW0FEdqa1oOxgpZoPykDLaQ5CI-1SCyVrOgLrL9tZ67ALn4o7LXsIA571vnc0TNRJFI8sxhQc14XKYk-d5toq4Itxd3iBWXSIZz-HXhcgrt7K5Z1hxsQ5EX8eHlmEld51Duevxwvn7zw35iTWoqHjTRva9TcHwiTzu4UHe6gNfKpP1VE2RUrbwxKK-c9CmvC-LGhw5kksG7lVaqbxHaffY9koAN-2C5uS0TGY2v87IYQjl0UD8gFllr4t3QN1cUl7V6RI3MAgm615E5nwx9kpMs6l0dqtX7iqyZMu8g9MQmqfeOhg9CBIeAWxPRKuK07yBQ8vh6ZXxAYbFXRBKM4xn4IZ8msic9_Z6g0KJOQ8i4he8JVQh1kYJOJlhbJMaggoNu5VeTtFG01Sx_Cj4Lt3VXtPqMuI-HWW_yu6wCawKkHRf3ByAyfJQRJtH53sVnEHGtx2_hAsgLop1M7AKH3dleH2l0yBrnDb6_E9hm2ROTUo_JZoBAbgF61DSKmNyGZrLGzEia6BhvN2lBdUTzLgRVSLdxS1RUb2ctuKloPPsvIUf5vu0ddbfR3yrwPuVI84urrHuNdgXab-p87-OOYI7rShGNs4GVCEyy8f4IxYF5_aoAfa1vugQrT7xkbckpoEtVEV9wHUd_KhlWN_R63nlQX_I2N23kRLOO4cjpPnD3oKniIgal6TbezDDe6O9VeJwLPII1ovJMtJN6Tg=w200-h190-p-k-rw-nu-v1"
+            />
+          </div>
+          <h2 className={`mb-3 text-2xl font-semibold`}>
+            配列外{" "}
+          </h2>
+          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+            えええ
+          </p>
+        </a> 
+
+      </div>
+    </main>
+  );
+}
